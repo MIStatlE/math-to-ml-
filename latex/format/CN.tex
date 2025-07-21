@@ -1,0 +1,100 @@
+\documentclass{article}
+\usepackage{ctex,fontspec,geometry,xcolor}
+\geometry{left=2.2cm,right=2.2cm,top=2.4cm,bottom=2.4cm}
+
+% ---- 基础排版 ----
+\setmainfont{Times New Roman}
+\setCJKmainfont{FandolSong}
+\usepackage{microtype,mathtools,bm,physics,enumitem}
+\usepackage{titlesec,setspace,fancyhdr,hyperref,cleveref}
+\setstretch{1.15}
+
+% ---- 彩色章节 ----
+\titleformat{\section}
+  {\Large\bfseries\color{teal}}{\thesection.}{0.6em}{}[\titlerule]
+% --- Algorithms ---
+\usepackage[ruled,vlined,linesnumbered]{algorithm2e}
+\renewcommand{\algorithmcfname}{Algorithm}
+\SetKwInput{KwInput}{Input}
+\SetKwInput{KwOutput}{Output}
+
+
+% cleveref already loaded earlier (if not):
+\usepackage[capitalize,nameinlink]{cleveref}
+
+% ---- 定理环境 ----
+\definecolor{shadecolor}{rgb}{0.90,0.95,1}
+\definecolor{thmblue}{RGB}{35,116,190}
+\usepackage{tcolorbox,thmtools}
+\declaretheoremstyle[headfont=\bfseries\color{white},
+  headformat=\COLORBOX{thmblue}{\color{white}\thmname{#1}~\thmnumber{#2}},
+  shaded={bgcolor=shadecolor}]{thmbox}
+\declaretheorem[style=thmbox,numberwithin=section]{theorem}
+\declaretheorem[style=thmbox,sibling=theorem]{lemma}
+\declaretheorem[style=thmbox,sibling=theorem]{definition}
+
+% --- Extra boxes ---
+% 深浅蓝 & 深浅红 统一
+\newtcolorbox{analysisBox}{
+  colback=blue!8!white, colframe=blue!60!black,
+  coltitle=white, title=Analysis, fonttitle=\bfseries,
+  rounded corners=2pt, boxrule=0.6pt, breakable
+}
+\newtcolorbox{remarkBox}{
+  colback=red!8!white,  colframe=red!60!black,
+  coltitle=white, title=Remark, fonttitle=\bfseries,
+  rounded corners=2pt, boxrule=0.6pt, breakable
+}
+
+
+% ---- 页眉页脚 ----
+\fancyhf{}\renewcommand{\headrulewidth}{0pt}
+\fancyhead[L]{HD Probability}
+\fancyhead[R]{\leftmark}
+\fancyfoot[C]{\thepage}
+\pagestyle{fancy}
+
+\title{Suprema Expectation II (Enhanced)}
+\author{}
+\date{\today}
+\begin{document}
+\maketitle
+
+\begin{abstract}
+A pretty version of the previous notes …
+\end{abstract}
+
+\section{Introduction}
+\subsection{subsection}
+Text $\ldots$
+
+\begin{definition}[ε–net]
+Given a metric space $(T,d)$, a set $N\subset T$ is an $\varepsilon$–net if …
+\end{definition}
+
+\begin{lemma}
+$N(T,d,\varepsilon)\le P(T,d,\varepsilon)$, etc.
+\end{lemma}
+\begin{algorithm}[H]
+\KwInput{Data $D$, step size $\eta$}
+\KwOutput{Optimal $x^\star$}
+Initialize $x^{(0)}$\;
+\For{$t=0$ \KwTo $T-1$}{
+  $g_t \gets \nabla f\bigl(x^{(t)}\bigr)$\;
+  $x^{(t+1)} \gets x^{(t)} - \eta\,g_t$\;
+}
+\caption{Gradient Descent}\label{alg:gd}
+\end{algorithm}
+
+\begin{analysisBox}
+We prove \cref{thm:finite-approx} by decomposing the supremum into
+projection error and net maximum, then apply Lemma~\ref{lem:finite-max}.
+\end{analysisBox}
+
+\begin{remarkBox}
+Choosing $\varepsilon = 1/4$ balances the two terms and yields the
+optimal $\sqrt{d}$ rate.
+\end{remarkBox}
+
+\printbibliography       % 若使用 biblatex
+\end{document}
