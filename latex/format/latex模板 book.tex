@@ -1,0 +1,272 @@
+\documentclass[10pt,openany]{book} % 可改 11pt，openright
+
+% ==== Engine ====
+\usepackage{ifxetex,ifluatex}
+\usepackage{everypage}
+\ifxetex\else\ifluatex\else
+  \errmessage{Please compile with XeLaTeX or LuaLaTeX}
+\fi\fi
+% —— 让 plain 页式复用 fancy 的设置（章/部首页也有同样的页眉页脚）——
+\makeatletter
+\let\ps@plain\ps@fancy
+\makeatother
+% ==== Fonts & Page ====
+\usepackage{ctex,fontspec,geometry,xcolor}
+\geometry{paperwidth=6in,paperheight=9in, margin=0.8in} % 常见 6x9
+\setmainfont{Times New Roman}
+\IfFontExistsTF{Noto Serif CJK SC}{\setCJKmainfont{Noto Serif CJK SC}}{\setCJKmainfont{FandolSong}}
+\linespread{1.35}
+\pagecolor{white}\color{black}
+
+% ==== Colors ====
+\definecolor{brand}{HTML}{1A9D8F}
+\definecolor{brandD}{HTML}{2A7F6F}
+\definecolor{ink}{HTML}{1A1A1A}
+\definecolor{keybg}{HTML}{E8F4F1}
+\definecolor{keydark}{HTML}{2F5E58}
+\definecolor{accent}{HTML}{FF6B6B}
+\definecolor{accentD}{HTML}{D94F4F}
+\definecolor{soft}{HTML}{F3F8F7}
+
+% ==== Date macro ====
+\newcommand{\padzero}[1]{\ifnum#1<10 0\fi\number#1}
+\newcommand{\BrandYMD}{{\the\year·\padzero{\the\month}·\padzero{\the\day}}}
+
+% ==== Left bands on every page ====
+\usepackage{tikz,eso-pic}
+\usetikzlibrary{positioning,calc}
+\newcommand{\LeftBandA}{0.12in}
+\newcommand{\LeftBandB}{0.28in}
+\newcommand{\PutLeftBands}{%
+  \begin{tikzpicture}[remember picture, overlay]
+    \fill[keydark] ([xshift=0cm]current page.north west)
+                   rectangle ([xshift=\LeftBandA]current page.south west);
+    \fill[keybg]   ([xshift=\LeftBandA]current page.north west)
+                   rectangle ([xshift=\LeftBandB]current page.south west);
+  \end{tikzpicture}%
+}
+\AddEverypageHook{\PutLeftBands}
+
+% ==== Header / Footer ====
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0.4pt}
+\fancyhead[LE]{\nouppercase{\leftmark}}   % 偶数页：章标题
+\fancyhead[RO]{\nouppercase{\rightmark}}  % 奇数页：节标题
+\fancyfoot[LE,RO]{\textcolor{brand}{\thepage}}
+\fancyfoot[LO,RE]{\textcolor{brand}{@MIStatlE｜集中不等式 \seriesnum}}
+% 封面样式
+\fancypagestyle{coverstyle}{\fancyhf{}\renewcommand{\headrulewidth}{0pt}\renewcommand{\footrulewidth}{0pt}}
+
+% ==== Series number parameter ====
+\newcommand{\seriesnum}{I}
+
+% ==== Titles (Part/Chapter/Section) ====
+% —— Part 标题整块垂直居中 + 颜色/横线正确 —— 
+\usepackage{titlesec}
+
+\titleformat{\part}[display]
+  {\filcenter\bfseries\color{keydark}}   % 颜色只作用于标题块内部
+  {\Large Part \thepart}                 % 标签行（如：Part I）
+  {0.6em}                                % 标签与标题的间距
+  {\Huge}                                % 标题字号（开始标题）
+  [\vspace{0.8em}{\color{brand}\rule{7cm}{1.2pt}}] % 结尾横线（在本地组里上色）
+
+% 关键：用 titlespacing 的 before/after = \fill 来垂直居中整个块
+\titlespacing*{\part}{0pt}{\fill}{\fill}
+% Chapter
+\titleformat{\chapter}[display]
+  {\bfseries\color{keydark}}
+  {\Large 第\thechapter 章}
+  {0.4em}
+  {\Huge}
+  [\vspace{0.4em}{\color{brandD!45}\rule{6cm}{0.8pt}}]
+\titlespacing*{\chapter}{0pt}{1.2em}{0.8em}
+
+% Section / Subsection
+\titleformat{\section}
+  {\Large\bfseries\color{keydark}}
+  {\thesection}{0.6em}{}
+\titlespacing*{\section}{0pt}{0.9em}{0.5em}
+\titleformat{\subsection}
+  {\large\bfseries\color{brand}}
+  {\thesubsection}{0.6em}{}
+\titlespacing*{\subsection}{0pt}{0.8em}{0.4em}
+
+% ==== (Optional) Chapter mini-TOC interface ====
+% 如需每章小目录，取消注释以下三行，并在 \begin{document} 后调用 \dominitoc，
+% 每个 \chapter 后面放 \minitoc 即可。
+% \usepackage{minitoc}
+% \setcounter{minitocdepth}{2}
+% \setlength{\mtcindent}{12pt}
+
+% ==== Boxes & Sidebars ====
+\usepackage[most]{tcolorbox}
+\tcbset{enhanced, boxrule=0.9pt, arc=3pt, left=10pt,right=10pt,top=10pt,bottom=10pt}
+\newtcolorbox{KeyBox}{
+  colback=keybg, colframe=brandD,
+  colbacktitle=brandD, title=\textbf{\color{white}Key Idea},
+  fonttitle=\bfseries\large, coltitle=white, breakable
+}
+\newtcolorbox{Takeaway}{
+  colback=accent!12, colframe=accentD,
+  colbacktitle=accentD, title=\textbf{\color{white}Takeaway},
+  fonttitle=\bfseries\large, coltitle=white, breakable
+}
+\definecolor{exframe}{HTML}{6C5CE7}
+\definecolor{exbg}{HTML}{F2E9FF}
+\newtcolorbox{Example}[1][]{%
+  enhanced, colback=exbg, colframe=exframe,
+  coltitle=white, colbacktitle=exframe,
+  title=\textbf{Example},
+  fonttitle=\bfseries, boxrule=1.1pt, arc=4pt,
+  left=10pt,right=10pt,top=10pt,bottom=10pt,
+  attach boxed title to top left = {yshift=-2mm, xshift=2mm},
+  breakable, #1
+}
+\usepackage{mdframed}
+\newmdenv[
+  topline=false, bottomline=false, rightline=false,
+  linewidth=4pt, linecolor=brand, backgroundcolor=soft,
+  innerleftmargin=10pt, innerrightmargin=10pt,
+  skipabove=6pt, skipbelow=6pt
+]{SideBar}
+
+% ==== Math & Theorems ====
+\usepackage{amsmath,amssymb,bm,amsthm}
+\DeclareMathOperator{\Var}{Var}
+\newcommand{\E}{\mathbb{E}}
+\numberwithin{equation}{chapter}
+\theoremstyle{plain}
+\newtheorem{theorem}{定理}[chapter]
+\newtheorem{lemma}[theorem]{引理}
+\newtheorem{proposition}[theorem]{命题}
+\newtheorem{corollary}[theorem]{推论}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{定义}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{注释}
+
+% ==== Simple Cover Macro ====
+% —— 极简封面（仅居中标题/副标题/日期）——
+\newcommand{\MakeBookCoverUltraSimple}[3]{%
+  % #1 主标题 #2 副标题 #3 标签（可空）
+  \thispagestyle{coverstyle}%
+  \vspace*{\fill}
+  \begin{center}
+    {\bfseries\fontsize{30}{36}\selectfont\color{keydark} #1\par}
+    \vspace{0.45em}
+    {\bfseries\fontsize{16}{22}\selectfont\color{ink!90} #2\par}
+    \vspace{0.6em}
+    \if\relax\detokenize{#3}\relax\else
+      \vspace{0.2em}
+      {\color{brandD}\fboxsep=6pt\colorbox{white}{\textbf{\textcolor{brandD}{#3}}}\par}
+    \fi
+    \vspace{0.8em}
+    {\small\color{keydark!75}\BrandYMD}
+  \end{center}
+  \vspace*{\fill}
+  \clearpage
+}
+
+% ==== Chapter Epigraph ====
+\newcommand{\ChapterEpigraph}[2][]{%
+  \par\vspace*{0.6em}
+  \begin{flushright}
+    \begin{minipage}{0.78\linewidth}\raggedleft
+      {\itshape\color{ink!85}#2\par}%
+      \if\relax\detokenize{#1}\relax\else
+        \vspace{0.3em}{\color{ink!70}--- #1}\par
+      \fi
+    \end{minipage}
+  \end{flushright}
+  \vspace{0.6em}
+}
+
+% ==== Begin Document ====
+\begin{document}
+% \dominitoc % ← 若启用每章小目录，在此行取消注释
+
+% 封面
+\MakeBookCoverUltraSimple{集中不等式（示例书名）}{高维概率与机器学习理论中的浓缩现象}{上册 · 预印本}
+
+% Frontmatter
+\frontmatter
+\thispagestyle{coverstyle}
+\vspace*{3cm}
+\begin{center}
+{\Large\bfseries 致谢（示例）}\\[1.2em]
+\parbox{0.75\linewidth}{\centering
+感谢同行与读者的反馈……（此处放致谢内容占位）。}
+\end{center}
+\clearpage
+
+\setcounter{tocdepth}{2} % 目录显示到 subsection
+\tableofcontents
+\clearpage
+
+% Mainmatter
+\mainmatter
+
+\part{预备知识与工具}
+\chapter{概率预备（示例）}
+% \minitoc % ← 若启用 minitoc，这里放置
+\ChapterEpigraph[Kolmogorov]{The theory of probability as a mathematical discipline can
+and should be developed from axioms in exactly the same way as geometry and algebra.}
+
+\begin{SideBar}
+\textbf{阅读建议}：本章覆盖后续章节频繁使用的定义与工具。
+\end{SideBar}
+
+\section{Orlicz 范数与次高斯}
+\begin{definition}[Orlicz 范数]
+随机变量 $Z$ 的 $\psi_2$ 范数定义为
+\[
+\|Z\|_{\psi_2} := \inf\{s>0:\ \E e^{Z^2/s^2}\le 2\}.
+\]
+\end{definition}
+
+\begin{lemma}[基本性质（示例）]
+若 $X$ 次高斯，则 $X^2-\E X^2$ 次指数。
+\end{lemma}
+
+\begin{KeyBox}
+\textbf{要点}：\(\psi_2\)-有界 $\Rightarrow$ 指数尾界；平方中心化 $\Rightarrow$ \(\psi_1\)-有界。
+\end{KeyBox}
+
+\section{Bernstein 不等式}
+\begin{theorem}[Bernstein（示例）]
+设 $Z_i$ 独立、$\|Z_i\|_{\psi_1}\le v$，则……
+\end{theorem}
+
+\begin{Takeaway}
+小偏差 $\sim \|a\|_2$，大偏差 $\sim \|a\|_\infty$。
+\end{Takeaway}
+
+\part{主结果}
+\chapter{Hanson--Wright 不等式（示例）}
+% \minitoc
+\section{定理与讨论}
+\begin{Example}
+这是一个示例环境，用于给出具体计算或反例。
+\end{Example}
+
+% Appendix
+\appendix
+\part{附录}
+\chapter{符号与记号（示例）}
+% \minitoc
+\begin{itemize}
+  \item \(\E\)：数学期望
+  \item \(\Var\)：方差算子
+\end{itemize}
+
+% Backmatter
+\backmatter
+\begin{thebibliography}{9}
+\bibitem{vershynin}
+Vershynin, R. \emph{High-Dimensional Probability}. CUP, 2018.
+\end{thebibliography}
+
+\end{document}

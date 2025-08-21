@@ -1,0 +1,248 @@
+\documentclass[12pt]{article} % 也支持 14pt/17pt/20pt
+
+% ==== Engine ====
+\usepackage{ifxetex,ifluatex}
+\usepackage{everypage}
+\ifxetex\else\ifluatex\else
+  \errmessage{Please compile with XeLaTeX or LuaLaTeX}
+\fi\fi
+
+% ==== Fonts & Page ====
+\usepackage{ctex,fontspec,geometry,xcolor}
+\geometry{paperwidth=7.5in,paperheight=10in, margin=0.7in}
+\setmainfont{Times New Roman}
+\IfFontExistsTF{Noto Serif CJK SC}{
+  \setCJKmainfont{Noto Serif CJK SC}
+}{
+  \setCJKmainfont{FandolSong}
+}
+\linespread{1.4}
+\pagecolor{white}\color{black}
+
+% ==== Colors ====
+\definecolor{brand}{HTML}{1A9D8F}
+\definecolor{brandD}{HTML}{2A7F6F}
+\definecolor{ink}{HTML}{1A1A1A}
+\definecolor{keybg}{HTML}{E8F4F1}
+\definecolor{keydark}{HTML}{2F5E58}
+\definecolor{accent}{HTML}{FF6B6B}
+\definecolor{accentD}{HTML}{D94F4F}
+\definecolor{soft}{HTML}{F3F8F7}
+\definecolor{xhsRed}{HTML}{FF4D4F}
+\definecolor{xhsDark}{HTML}{1F1F1F}
+\definecolor{xhsCream}{HTML}{FFF8F0}
+\definecolor{xhsBlue}{HTML}{2F54EB}
+\definecolor{xhsYellow}{HTML}{FFB800}
+
+% ==== Date macro ====
+\newcommand{\padzero}[1]{\ifnum#1<10 0\fi\number#1}
+\newcommand{\BrandYMD}{{\the\year·\padzero{\the\month}·\padzero{\the\day}}}
+
+% ==== Section Titles ====
+\usepackage{titlesec}
+\titleformat{\section}[block]
+  {\centering\bfseries\color{keydark}\fontsize{24pt}{26pt}\selectfont}
+  {\thesection}{0.6em}{}
+\titlespacing*{\section}{0pt}{0.9em}{0.5em}
+
+\titleformat{\subsection}{\Large\bfseries\color{brand}}{\thesubsection}{0.6em}{}
+\titlespacing*{\subsection}{0pt}{0.8em}{0.4em}
+
+% ==== Left bands on every page ====
+\usepackage{tikz,eso-pic}
+\usetikzlibrary{positioning,calc}
+\newcommand{\LeftBandA}{0.12in}
+\newcommand{\LeftBandB}{0.28in}
+\newcommand{\PutLeftBands}{%
+  \begin{tikzpicture}[remember picture, overlay]
+    \fill[keydark] ([xshift=0cm]current page.north west)
+                    rectangle
+                   ([xshift=\LeftBandA]current page.south west);
+    \fill[keybg]   ([xshift=\LeftBandA]current page.north west)
+                    rectangle
+                   ([xshift=\LeftBandB]current page.south west);
+  \end{tikzpicture}%
+}
+\AddEverypageHook{\PutLeftBands}
+
+% ==== Header / Footer ====
+\usepackage{fancyhdr}
+\fancypagestyle{coverstyle}{%
+  \fancyhf{}\renewcommand{\headrulewidth}{0pt}\renewcommand{\footrulewidth}{0pt}
+}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\sectionmark}[1]{\markright{\thesection\ #1}} % 右上角：节号 + 节题
+\fancyhead[R]{\nouppercase{\rightmark}}
+\fancyfoot[L]{\textcolor{brand}{@MIStatlE}｜集中不等式 \seriesnum}
+\fancyfoot[R]{\textcolor{brand}{\thepage}}
+\pagestyle{fancy}
+
+% ==== 参数：系列编号 ====
+\newcommand{\seriesnum}{I} % 改为 I/II/III 或 1/2/3
+
+% ==== Highlight boxes ====
+\usepackage[most]{tcolorbox}
+\tcbset{enhanced, boxrule=0.9pt, arc=3pt, left=10pt,right=10pt,top=10pt,bottom=10pt}
+\newtcolorbox{KeyBox}{
+  colback=keybg, colframe=brandD,
+  colbacktitle=brandD, title=\textbf{\color{white}Key Idea},
+  fonttitle=\bfseries\large, coltitle=white, breakable
+}
+\newtcolorbox{Takeaway}{
+  colback=accent!12, colframe=accentD,
+  colbacktitle=accentD, title=\textbf{\color{white}Takeaway},
+  fonttitle=\bfseries\large, coltitle=white, breakable
+}
+
+% ==== Flow sidebar ====
+\usepackage{mdframed}
+\newmdenv[
+  topline=false, bottomline=false, rightline=false,
+  linewidth=4pt, linecolor=brand, backgroundcolor=soft,
+  innerleftmargin=10pt, innerrightmargin=10pt,
+  skipabove=6pt, skipbelow=6pt
+]{SideBar}
+
+% ==== Math & Theorems ====
+\usepackage{amsmath,amssymb,bm,amsthm}
+\DeclareMathOperator{\Var}{Var}
+\newcommand{\E}{\mathbb{E}}
+
+% Shaded theorem 外框（可选）
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{235,245,255}
+\newenvironment{ShadedTheorem}[1][]{%
+  \begin{shaded}\begin{theorem}[#1]}{\end{theorem}\end{shaded}}
+
+% 定理样式 & 按 section 编号
+\newtheoremstyle{customthm}{0.8em}{0.8em}{\itshape}{}{\bfseries}{.}{0.5em}{}
+\newtheoremstyle{customdef}{0.8em}{0.8em}{}{}{\bfseries}{.}{0.5em}{}
+\theoremstyle{customthm}
+\newtheorem{theorem}{定理}[section]
+\newtheorem{lemma}[theorem]{引理}
+\newtheorem{proposition}[theorem]{命题}
+\newtheorem{corollary}[theorem]{推论}
+\theoremstyle{customdef}
+\newtheorem{definition}[theorem]{定义}
+\newtheorem{remark}[theorem]{注释}
+
+% ==== 章节机制（自定义章号/章题，仅影响编号显示） ====
+\newcounter{chapter}
+\newcommand{\setchapter}[2]{%
+  \setcounter{chapter}{#1}%
+  \setcounter{section}{0}%
+  \def\ChapterTitle{#2}%
+}
+\renewcommand{\thesection}{\arabic{chapter}.\arabic{section}}
+\renewcommand{\thesubsection}{\arabic{chapter}.\arabic{section}.\arabic{subsection}}
+\newcommand{\ChapterHeading}{%
+  \vspace*{0.6cm}
+  {\fontsize{26pt}{28pt}\selectfont\bfseries\color{keydark}
+   第\arabic{chapter}章\ \ChapterTitle\par}
+  \vspace{0.6cm}
+}
+\newcommand{\BeginChapter}[2]{%
+  \clearpage
+  \setchapter{#1}{#2}%
+  \ChapterHeading
+}
+
+% ==== Remark（非盒子风） ====
+\newenvironment{RemarkNote}[1][]{%
+  \par\smallskip
+  \noindent{\bfseries\color{accentD}Remark}%
+  \ifx\relax#1\relax\else{\bfseries\color{accentD} \ (#1)}\fi
+  \ .\ %
+}{%
+  \par\smallskip
+  {\color{ink!60}\rule{\linewidth}{0.4pt}}
+  \smallskip
+}
+
+% ==== Example 盒子 ====
+\definecolor{exframe}{HTML}{6C5CE7}
+\definecolor{exbg}{HTML}{F2E9FF}
+\newtcolorbox{Example}[1][]{%
+  enhanced, colback=exbg, colframe=exframe,
+  coltitle=white, colbacktitle=exframe,
+  title=\textbf{Example},
+  fonttitle=\bfseries, boxrule=1.1pt, arc=4pt,
+  left=10pt,right=10pt,top=10pt,bottom=10pt,
+  attach boxed title to top left = {yshift=-2mm, xshift=2mm},
+  breakable, #1
+}
+
+% ==== 证明环境 ====
+\renewenvironment{proof}[1][证明]{\par
+  \pushQED{\qed}%
+  \normalfont \topsep6pt \partopsep0pt
+  \trivlist
+  \item[\hskip\labelsep\bfseries #1.]\ignorespaces
+}{\popQED\endtrivlist}
+
+% ==== 系列导航卡（页末信息块，可选） ====
+\newcommand{\SeriesCardEnd}[3]{%
+  \vspace{1.4em}\noindent
+  \setlength{\fboxsep}{8pt}\setlength{\fboxrule}{0.8pt}%
+  \fcolorbox{brand}{soft}{%
+    \parbox{\dimexpr\linewidth-2\fboxsep-2\fboxrule\relax}{%
+      \textbf{集中不等式系列 · 第 #1 篇}\par
+      \vspace{0.3em}%
+      \noindent
+      \begin{minipage}[t]{0.49\linewidth}\raggedright
+        \textit{上一篇：}#2
+      \end{minipage}\hfill
+      \begin{minipage}[t]{0.49\linewidth}\raggedleft
+        \textit{下一篇：}#3
+      \end{minipage}%
+    }%
+  }%
+}
+
+% =========================
+% ======== 文档开始 ========
+% =========================
+\begin{document}
+
+% ====== 使用示例（请按需替换/删除） ======
+% 设定章号与章标题（可选打印大标题）
+\setchapter{1}{示例章标题}
+%\ChapterHeading            % 如不想显示章标题，可注释本行
+
+\section{xx不等式}
+\begin{SideBar}
+\textbf{背景/引言/要解决的问题}
+\end{SideBar}
+\subsection{预备知识}
+
+\begin{definition}[示例定义]
+这是一个示例定义。\par
+\end{definition}
+\begin{ShadedTheorem}[示例定理]
+    这是一个示例定理陈述。
+\end{ShadedTheorem}
+
+
+\begin{proof}
+这里是证明思路……
+\end{proof}
+\begin{RemarkNote}
+    发现的奇妙的东西
+\end{RemarkNote}
+\begin{KeyBox}
+关键想法要点总结……
+\end{KeyBox}
+
+\begin{Takeaway}
+简要总结内容
+\end{Takeaway}
+
+\section*{参考文献}
+\begin{enumerate}
+  \item Rudelson, M.\ \& Vershynin, R. (2013). Hanson--Wright inequality and sub-gaussian concentration. \textit{Electronic Communications in Probability}, 18, 1--9.
+\end{enumerate}
+% 页末信息块（可选）
+%\SeriesCardEnd{I}{上一篇标题}{下一篇标题}
+
+\end{document}
