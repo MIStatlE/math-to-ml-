@@ -2,6 +2,8 @@
 
 This guide provides detailed instructions for using the LaTeX templates in this repository.
 
+> **📌 Source**: These templates are sourced from [MIStatlE/math-to-ml-](https://github.com/MIStatlE/math-to-ml-). Special thanks to the original authors!
+
 ## Table of Contents
 
 - [Getting Started](#getting-started)
@@ -304,6 +306,17 @@ Add to your `settings.json`:
 ### Undefined Control Sequence
 
 **Solution:** Check for missing packages or typos in command names.
+
+---
+
+## Credits
+
+These LaTeX templates are sourced from:
+
+- **Original Repository**: [MIStatlE/math-to-ml-](https://github.com/MIStatlE/math-to-ml-)
+- **Authors**: MIStatlE and contributors
+
+We extend our gratitude to the original authors for creating and sharing these beautiful templates.
 
 ---
 

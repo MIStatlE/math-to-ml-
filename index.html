@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LaTeX Document Templates</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+        integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            font-size: 16px;
+            -webkit-text-size-adjust: 100%;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4e8ec 100%);
+            color: #333;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        a {
+            color: #1A9D8F;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        a:hover {
+            color: #2A7F6F;
+            text-decoration: underline;
+        }
+
+        .wrapper {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2em;
+        }
+
+        .site-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 1.5em;
+            margin-bottom: 2em;
+            border-bottom: 2px solid #e8e8e8;
+        }
+
+        .site-name {
+            font-size: 1.5em;
+            font-weight: 700;
+            color: #2F5E58;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .site-name:hover {
+            color: #1A9D8F;
+            text-decoration: none;
+        }
+
+        .top-nav {
+            display: flex;
+            gap: 1.5em;
+        }
+
+        .top-nav a {
+            color: #666;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .top-nav a:hover {
+            color: #1A9D8F;
+            text-decoration: none;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 3em 0;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            margin-bottom: 2em;
+        }
+
+        .hero h1 {
+            font-size: 2.8em;
+            margin-bottom: 0.3em;
+            color: #2F5E58;
+        }
+
+        .hero .subtitle {
+            color: #666;
+            font-size: 1.2em;
+            margin-bottom: 1.5em;
+        }
+
+        .badges {
+            display: flex;
+            justify-content: center;
+            gap: 0.5em;
+            flex-wrap: wrap;
+            margin-bottom: 1em;
+        }
+
+        .badges img {
+            height: 22px;
+        }
+
+        .page-content {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            padding: 2em;
+            margin-bottom: 2em;
+        }
+
+        h2 {
+            margin-top: 0;
+            margin-bottom: 0.8em;
+            font-size: 1.8em;
+            color: #2F5E58;
+            border-bottom: 2px solid #E8F4F1;
+            padding-bottom: 0.5em;
+        }
+
+        h3 {
+            margin-top: 1.5em;
+            margin-bottom: 0.6em;
+            font-size: 1.3em;
+            color: #1A9D8F;
+        }
+
+        .template-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5em;
+            margin: 1.5em 0;
+        }
+
+        .template-card {
+            background: #f9fafb;
+            border: 1px solid #e8e8e8;
+            border-radius: 8px;
+            padding: 1.5em;
+            transition: all 0.3s;
+        }
+
+        .template-card:hover {
+            border-color: #1A9D8F;
+            box-shadow: 0 4px 12px rgba(26, 157, 143, 0.15);
+            transform: translateY(-2px);
+        }
+
+        .template-card h4 {
+            margin: 0 0 0.5em 0;
+            color: #2F5E58;
+            font-size: 1.1em;
+        }
+
+        .template-card p {
+            margin: 0;
+            color: #666;
+            font-size: 0.95em;
+        }
+
+        .template-card .tag {
+            display: inline-block;
+            background: #E8F4F1;
+            color: #1A9D8F;
+            padding: 0.2em 0.6em;
+            border-radius: 4px;
+            font-size: 0.8em;
+            margin-top: 0.8em;
+        }
+
+        .features-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1em;
+            list-style: none;
+            padding: 0;
+            margin: 1.5em 0;
+        }
+
+        .features-list li {
+            display: flex;
+            align-items: center;
+            gap: 0.5em;
+            padding: 0.5em;
+            background: #f9fafb;
+            border-radius: 6px;
+        }
+
+        .features-list li i {
+            color: #1A9D8F;
+        }
+
+        .code-block {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 1.2em;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 1em 0;
+            font-family: "Fira Code", "Courier New", monospace;
+            font-size: 0.9em;
+        }
+
+        .cta-section {
+            display: flex;
+            gap: 1em;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin: 2em 0;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5em;
+            padding: 0.9em 1.8em;
+            background: #1A9D8F;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s;
+            border: 2px solid #1A9D8F;
+        }
+
+        .btn:hover {
+            background: #2A7F6F;
+            border-color: #2A7F6F;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(26, 157, 143, 0.3);
+            text-decoration: none;
+        }
+
+        .btn-secondary {
+            background: white;
+            color: #1A9D8F;
+        }
+
+        .btn-secondary:hover {
+            background: #1A9D8F;
+            color: white;
+        }
+
+        .credit-box {
+            background: linear-gradient(135deg, #E8F4F1 0%, #f0f7f6 100%);
+            border-left: 4px solid #1A9D8F;
+            padding: 1.2em 1.5em;
+            border-radius: 0 8px 8px 0;
+            margin: 1.5em 0;
+        }
+
+        .credit-box h4 {
+            margin: 0 0 0.5em 0;
+            color: #2F5E58;
+        }
+
+        .credit-box p {
+            margin: 0;
+            color: #555;
+        }
+
+        .citation-box {
+            background: #f9f9f9;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 1.2em 1.5em;
+            margin: 1.5em 0;
+        }
+
+        .citation-box pre {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 1em;
+            border-radius: 6px;
+            overflow-x: auto;
+            margin: 0.8em 0 0 0;
+            font-size: 0.85em;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 2em;
+            color: #666;
+            font-size: 0.9em;
+        }
+
+        .footer a {
+            color: #1A9D8F;
+        }
+
+        @media (max-width: 768px) {
+            .wrapper {
+                padding: 1em;
+            }
+
+            .site-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1em;
+            }
+
+            .hero h1 {
+                font-size: 2em;
+            }
+
+            h2 {
+                font-size: 1.5em;
+            }
+
+            .cta-section {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .btn {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrapper">
+        <header class="site-header">
+            <a href="/" class="site-name">
+                <i class="fas fa-file-alt"></i> LaTeX Templates
+            </a>
+            <nav class="top-nav">
+                <a href="https://github.com/MIStatlE/math-to-ml-">
+                    <i class="fas fa-code-branch"></i> Source
+                </a>
+                <a href="./docs/GUIDE.html">
+                    <i class="fas fa-book"></i> Docs
+                </a>
+            </nav>
+        </header>
+
+        <section class="hero">
+            <div class="badges">
+                <img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="License">
+                <img src="https://img.shields.io/badge/LaTeX-XeLaTeX%2FLuaLaTeX-green.svg" alt="LaTeX">
+                <img src="https://img.shields.io/badge/language-CN%2FEN-orange.svg" alt="Language">
+            </div>
+            <h1>LaTeX Document Templates</h1>
+            <p class="subtitle">Modern, professional templates for academic papers, lecture notes, and books</p>
+            <div class="cta-section" style="margin-top: 1.5em; margin-bottom: 0;">
+                <a href="https://github.com/MIStatlE/math-to-ml-" class="btn">
+                    <i class="fab fa-github"></i> View on GitHub
+                </a>
+                <a href="./docs/GUIDE.html" class="btn btn-secondary">
+                    <i class="fas fa-book-open"></i> Documentation
+                </a>
+            </div>
+        </section>
+
+        <section class="page-content">
+            <h2><i class="fas fa-layer-group"></i> Available Templates</h2>
+            
+            <div class="template-grid">
+                <div class="template-card">
+                    <h4><i class="fas fa-file-alt"></i> article-cn.tex</h4>
+                    <p>Chinese article template with colored theorem boxes and algorithm support.</p>
+                    <span class="tag">Chinese</span>
+                    <span class="tag">Academic</span>
+                </div>
+                <div class="template-card">
+                    <h4><i class="fas fa-graduation-cap"></i> article-en.tex</h4>
+                    <p>English lecture notes format inspired by academic course materials.</p>
+                    <span class="tag">English</span>
+                    <span class="tag">Lecture Notes</span>
+                </div>
+                <div class="template-card">
+                    <h4><i class="fas fa-paint-brush"></i> article-modern.tex</h4>
+                    <p>Modern design with left sidebar bands and highlight boxes.</p>
+                    <span class="tag">Modern</span>
+                    <span class="tag">Series</span>
+                </div>
+                <div class="template-card">
+                    <h4><i class="fas fa-square-root-alt"></i> article-enhanced.tex</h4>
+                    <p>Enhanced version with color-coded theorem environments.</p>
+                    <span class="tag">Mathematics</span>
+                    <span class="tag">Proofs</span>
+                </div>
+                <div class="template-card">
+                    <h4><i class="fas fa-book"></i> book.tex</h4>
+                    <p>Complete book template with parts, chapters, and appendices.</p>
+                    <span class="tag">Textbook</span>
+                    <span class="tag">Comprehensive</span>
+                </div>
+            </div>
+        </section>
+
+        <section class="page-content">
+            <h2><i class="fas fa-star"></i> Features</h2>
+            
+            <ul class="features-list">
+                <li><i class="fas fa-check-circle"></i> Modern typography</li>
+                <li><i class="fas fa-check-circle"></i> Colored theorem boxes</li>
+                <li><i class="fas fa-check-circle"></i> Chinese & English support</li>
+                <li><i class="fas fa-check-circle"></i> Algorithm environments</li>
+                <li><i class="fas fa-check-circle"></i> Sidebar & highlight boxes</li>
+                <li><i class="fas fa-check-circle"></i> Book structure support</li>
+                <li><i class="fas fa-check-circle"></i> XeLaTeX / LuaLaTeX</li>
+                <li><i class="fas fa-check-circle"></i> Professional styling</li>
+            </ul>
+        </section>
+
+        <section class="page-content">
+            <h2><i class="fas fa-rocket"></i> Quick Start</h2>
+            
+            <h3>1. Clone the repository</h3>
+            <div class="code-block">
+                git clone https://github.com/MIStatlE/math-to-ml-.git<br>
+                cd math-to-ml-/templates
+            </div>
+
+            <h3>2. Choose a template and edit</h3>
+            <div class="code-block">
+                # Open your preferred template<br>
+                # Update title, author, and content
+            </div>
+
+            <h3>3. Compile with XeLaTeX</h3>
+            <div class="code-block">
+                xelatex your-document.tex
+            </div>
+        </section>
+
+        <section class="page-content">
+            <h2><i class="fas fa-heart"></i> Credits & Source</h2>
+            
+            <div class="credit-box">
+                <h4><i class="fas fa-code-branch"></i> Original Source</h4>
+                <p>These LaTeX templates are sourced from the <a href="https://github.com/MIStatlE/math-to-ml-" target="_blank"><strong>MIStatlE/math-to-ml-</strong></a> repository. Special thanks to the original authors for creating these beautiful templates.</p>
+            </div>
+
+            <div class="citation-box">
+                <p><strong>If you use these templates in your work, please cite:</strong></p>
+                <pre>@misc{latex-templates-2025,
+  author = {MIStatlE},
+  title = {LaTeX Document Templates},
+  year = {2025},
+  publisher = {GitHub},
+  url = {https://github.com/MIStatlE/math-to-ml-}
+}</pre>
+            </div>
+        </section>
+
+        <footer class="footer">
+            <p>© 2025 | Released under the <a href="./LICENSE">MIT License</a></p>
+            <p>
+                <small>
+                    Templates sourced from <a href="https://github.com/MIStatlE/math-to-ml-">MIStatlE/math-to-ml-</a> |
+                    Last updated: <span id="timestamp"></span>
+                </small>
+            </p>
+        </footer>
+    </div>
+
+    <script>
+        document.getElementById('timestamp').textContent = new Date().toLocaleDateString();
+    </script>
+</body>
+
+</html>

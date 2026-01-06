@@ -3,8 +3,11 @@
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
 ![LaTeX](https://img.shields.io/badge/LaTeX-XeLaTeX%2FLuaLaTeX-green.svg)
 ![Language](https://img.shields.io/badge/language-CN%2FEN-orange.svg)
+![GitHub Pages](https://img.shields.io/badge/docs-GitHub%20Pages-brightgreen.svg)
 
 A collection of modern, clean LaTeX document templates for academic papers, lecture notes, reports, and books. Supports both Chinese and English typesetting with professional styling.
+
+> **📌 Source**: These templates are sourced from [MIStatlE/math-to-ml-](https://github.com/MIStatlE/math-to-ml-). Special thanks to the original authors!
 
 ## Quick Start
 
@@ -69,6 +72,10 @@ Check out the templates in the `templates/` directory for ready-to-use examples 
 ## Project Structure
 
 ```
+├── .github/
+│   └── workflows/       # GitHub Actions workflows
+│       ├── deploy.yml   # GitHub Pages deployment
+│       └── latex-check.yml
 ├── templates/           # LaTeX templates
 │   ├── article-cn.tex   # Chinese article template
 │   ├── article-en.tex   # English lecture notes
@@ -77,22 +84,37 @@ Check out the templates in the `templates/` directory for ready-to-use examples 
 │   └── book.tex         # Book template
 ├── docs/
 │   └── GUIDE.md         # Comprehensive documentation
+├── index.html           # GitHub Pages landing page
 ├── LICENSE
 └── README.md
 ```
+
+## Credits
+
+These LaTeX templates are sourced from:
+
+- **Original Repository**: [MIStatlE/math-to-ml-](https://github.com/MIStatlE/math-to-ml-)
+- **Authors**: MIStatlE and contributors
+
+We extend our gratitude to the original authors for creating and sharing these beautiful templates.
 
 ## Citation
 
 If you use these templates in your work, please cite:
 
 ```bibtex
-@misc{latex-templates,
-  author = {LaTeX Templates},
+@misc{latex-templates-2025,
+  author = {MIStatlE},
   title = {LaTeX Document Templates},
   year = {2025},
-  url = {https://github.com/your-username/latex-templates}
+  publisher = {GitHub},
+  url = {https://github.com/MIStatlE/math-to-ml-}
 }
 ```
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
 
 ## License
 
