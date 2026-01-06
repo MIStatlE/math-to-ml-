@@ -1,0 +1,101 @@
+# LaTeX auxiliary files
+*.aux
+*.log
+*.out
+*.toc
+*.lof
+*.lot
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+*.synctex(busy)
+*.pdfsync
+
+# LaTeX intermediate files
+*.dvi
+*.xdv
+*.ps
+*.eps-converted-to.pdf
+
+# Bibliography auxiliary files
+*.bbl
+*.bcf
+*.blg
+*.run.xml
+*-blx.aux
+*-blx.bib
+
+# Build tool auxiliary files
+*.nav
+*.snm
+*.vrb
+*.idx
+*.ilg
+*.ind
+*.ist
+*.glo
+*.gls
+*.glg
+
+# Beamer files
+*.snm
+*.nav
+
+# TikZ externalization
+*.dpth
+*.md5
+*.auxlock
+
+# tcolorbox
+*.listing
+
+# Algorithm2e
+*.alg
+
+# Makeindex
+*.nlo
+*.nls
+
+# Biber
+*.bcf
+*.run.xml
+
+# minitoc
+*.maf
+*.mlf
+*.mlt
+*.mtc*
+*.slf
+*.slt
+*.stc*
+
+# Latexmk
+*.fdb_latexmk
+
+# PDF output (uncomment if you want to ignore)
+# *.pdf
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Linux
+*~
+
+# Editor files
+*.swp
+*.swo
+*.bak
+
+# VS Code
+.vscode/
+
+# TeXStudio
+*.txss
+
+# Overleaf
+.overleaf/
