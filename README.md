@@ -69,6 +69,15 @@ For detailed usage instructions, examples, and customization options, see the [c
 
 Check out the templates in the `templates/` directory for ready-to-use examples with sample content demonstrating various features.
 
+### Article Enhanced Template Preview
+
+<p align="center">
+  <img src="assets/article-enhanced-preview-1.png" alt="Article Enhanced Template - Page 1" width="45%">
+  <img src="assets/article-enhanced-preview-2.png" alt="Article Enhanced Template - Page 2" width="45%">
+</p>
+
+📄 **[View Full PDF](assets/article-enhanced.pdf)**
+
 ## Project Structure
 
 ```
@@ -76,6 +85,10 @@ Check out the templates in the `templates/` directory for ready-to-use examples 
 │   └── workflows/       # GitHub Actions workflows
 │       ├── deploy.yml   # GitHub Pages deployment
 │       └── latex-check.yml
+├── assets/              # Compiled template assets
+│   ├── article-enhanced.pdf        # Compiled PDF
+│   ├── article-enhanced-preview-1.png  # Page preview
+│   └── article-enhanced-preview-2.png  # Page preview
 ├── templates/           # LaTeX templates
 │   ├── article-cn.tex   # Chinese article template
 │   ├── article-en.tex   # English lecture notes
