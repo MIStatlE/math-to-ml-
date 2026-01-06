@@ -1,0 +1,29 @@
+# Auto detect text files and perform LF normalization
+* text=auto
+
+# LaTeX files
+*.tex text diff=tex
+*.sty text diff=tex
+*.cls text diff=tex
+*.bib text diff=bibtex
+*.bst text
+
+# Documentation
+*.md text diff=markdown
+*.txt text
+
+# Scripts
+*.sh text eol=lf
+
+# Binary files
+*.pdf binary
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.eps binary
+
+# Archives
+*.zip binary
+*.tar binary
+*.gz binary
