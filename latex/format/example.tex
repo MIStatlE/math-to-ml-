@@ -1,0 +1,60 @@
+\documentclass[12pt]{article}
+\usepackage{xhsnote-template}
+
+% --------------------------------
+% Optional custom macros
+% --------------------------------
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\dd}{\,\mathrm{d}}
+\newcommand{\norm}[1]{\left\lVert #1 \right\rVert}
+
+\begin{document}
+
+\MakeShortHeader
+  {I-MMSE Identity}
+  {A compact note on mutual information and MMSE in Gaussian channels}
+  {Information Theory, Gaussian Channel, MMSE}
+
+\begin{KeyBox}
+在高斯信道
+\[
+Y_\gamma=\sqrt{\gamma}X+Z,\qquad Z\sim N(0,I_d),\quad Z\perp X
+\]
+中，互信息关于信噪比 \(\gamma\) 的导数恰好等于 MMSE：
+\[
+\frac{\dd}{\dd\gamma}I(X;Y_\gamma)=\frac{\log e}{2}\,\mathrm{mmse}(X\mid Y_\gamma).
+\]
+\end{KeyBox}
+
+\section{问题背景}
+
+I-MMSE identity 是信息论与统计估计之间一个非常漂亮的桥梁。
+它说明：\Term{信息增益的变化率}，正好由\Term{最优估计误差}刻画。
+
+\begin{XHSDefinition}[MMSE]
+设 \(X\in\R^d\) 且 \(\E[\norm{X}^2]<\infty\)。定义
+\[
+\mathrm{mmse}(X\mid Y):=\E\!\left[\norm{X-\E[X\mid Y]}^2\right].
+\]
+\end{XHSDefinition}
+
+\begin{XHSTheorem}[I-MMSE]
+设 \(Y_\gamma=\sqrt{\gamma}X+Z\)，其中 \(Z\sim N(0,I_d)\) 与 \(X\) 独立，则
+\[
+\frac{\dd}{\dd\gamma}I(X;Y_\gamma)=\frac{\log e}{2}\,\mathrm{mmse}(X\mid Y_\gamma).
+\]
+\end{XHSTheorem}
+
+\begin{xhsFormulaBox}[一个常见推论]
+由 I-MMSE 可得
+\[
+I(X;Y_\gamma)=\frac{\log e}{2}\int_0^\gamma \mathrm{mmse}(X\mid Y_t)\,\dd t.
+\]
+\end{xhsFormulaBox}
+
+\begin{Takeaway}
+在 Gaussian noise 下，“知道多少”和“还能估错多少”本质上是同一个结构的两种表达。
+\end{Takeaway}
+
+\end{document}

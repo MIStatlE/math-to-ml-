@@ -1,0 +1,242 @@
+% ===========================================
+% xhsnote-template.sty
+% A compact elegant short-note template for Chinese math notes / XHS posts
+% Author: Your Name
+% License: MIT (recommended)
+% ===========================================
+
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{xhsnote-template}[2026/03/12 Compact short note template]
+
+% ------------------------------------------------
+% 1. Engine check and fonts
+% ------------------------------------------------
+\RequirePackage{ifxetex,ifluatex}
+
+\ifxetex\else
+  \ifluatex\else
+    \PackageError{xhsnote-template}
+      {This template requires XeLaTeX or LuaLaTeX}
+      {Please compile with XeLaTeX or LuaLaTeX.}
+  \fi
+\fi
+
+% ------------------------------------------------
+% 2. Basic packages
+% ------------------------------------------------
+\RequirePackage{geometry}
+\RequirePackage{xcolor}
+\RequirePackage{titlesec}
+\RequirePackage[fontset=mac]{ctex}
+\RequirePackage{fontspec}
+\RequirePackage{tikz,eso-pic}
+\usetikzlibrary{positioning,calc,shadows,shapes.misc}
+\RequirePackage{fancyhdr}
+\RequirePackage[most]{tcolorbox}
+\RequirePackage{amsmath,amssymb,bm,amsthm}
+\RequirePackage{enumitem}
+\RequirePackage{float}
+
+% ------------------------------------------------
+% 3. Page layout
+% ------------------------------------------------
+\geometry{
+  paperwidth=7.5in,
+  paperheight=10in,
+  left=0.5in,
+  right=0.5in,
+  top=0.55in,
+  bottom=0.65in,
+  footskip=0.45in
+}
+
+\setmainfont{Times New Roman}
+\linespread{1.3}
+\pagecolor{white}
+
+% ------------------------------------------------
+% 4. Colors
+% ------------------------------------------------
+\definecolor{brand}{HTML}{1A9D8F}
+\definecolor{brandD}{HTML}{2A7F6F}
+\definecolor{keybg}{HTML}{E8F4F1}
+\definecolor{keydark}{HTML}{2F5E58}
+\definecolor{secblue}{HTML}{2B44C6}
+\definecolor{accentD}{HTML}{D94F4F}
+\definecolor{termblue}{HTML}{1A4C9A}
+\definecolor{ink}{HTML}{1A1A1A}
+
+% ------------------------------------------------
+% 5. Section styles
+% ------------------------------------------------
+\titleformat{\section}[block]
+  {\centering\Large\bfseries\color{keydark}}
+  {}{0em}{}
+  [\vspace{0.2em}\titlerule]
+
+\titlespacing*{\section}{0pt}{1.0em}{0.6em}
+
+\titleformat{\subsection}
+  {\large\bfseries\color{brand}}
+  {}{0em}{$\bullet$\ \ }
+
+\titlespacing*{\subsection}{0pt}{0.8em}{0.3em}
+
+% ------------------------------------------------
+% 6. Tcolorbox styles
+% ------------------------------------------------
+\tcbset{
+  xhs_elegant/.style={
+    enhanced, breakable,
+    colback=white, colframe=#1,
+    fonttitle=\bfseries, coltitle=white,
+    attach boxed title to top left={xshift=12pt, yshift*=-10pt},
+    boxed title style={
+      colback=#1,
+      frame hidden,
+      arc=3pt,
+      boxrule=0pt,
+      drop shadow={opacity=0.3, shadow xshift=1pt, shadow yshift=-1pt}
+    },
+    boxrule=0.5pt,
+    arc=3pt,
+    left=10pt, right=10pt, top=14pt, bottom=10pt,
+    drop shadow={opacity=0.06, shadow xshift=2pt, shadow yshift=-2pt},
+    before skip=10pt, after skip=10pt
+  }
+}
+
+\tcbset{
+  xhs_notion/.style={
+    enhanced, breakable,
+    frame hidden,
+    borderline west={3pt}{0pt}{#1},
+    colback=#1!7,
+    coltitle=#1,
+    fonttitle=\bfseries\small,
+    attach title to upper={\ \ },
+    after title={\par\vspace{0.2em}},
+    left=8pt, right=8pt, top=6pt, bottom=6pt,
+    arc=2pt,
+    before skip=6pt, after skip=6pt
+  }
+}
+
+\newtcolorbox{xhsFormulaBox}[1][公式]{
+  enhanced, breakable,
+  colback=secblue!4,
+  colframe=secblue,
+  coltitle=secblue,
+  fonttitle=\bfseries\small,
+  title={#1},
+  frame hidden,
+  borderline west={2pt}{0pt}{secblue},
+  sharp corners,
+  toptitle=3pt, bottomtitle=0pt,
+  left=8pt, right=8pt, top=4pt, bottom=8pt,
+  before skip=8pt, after skip=8pt
+}
+
+% ------------------------------------------------
+% 7. Public environments
+% ------------------------------------------------
+\newtcolorbox{KeyBox}{xhs_elegant=brand, title=Key Idea}
+
+\newtcolorbox{XHSDefinition}[1][]{
+  xhs_notion=brandD,
+  title=\if\relax\detokenize{#1}\relax 定义\else 定义（#1）\fi
+}
+
+\newtcolorbox{XHSTheorem}[1][]{
+  xhs_elegant=secblue,
+  title=\if\relax\detokenize{#1}\relax 定理\else 定理：#1\fi
+}
+
+\newtcolorbox{Takeaway}{
+  xhs_notion=accentD,
+  title=Takeaway
+}
+
+% ------------------------------------------------
+% 8. Header
+% ------------------------------------------------
+\newcommand{\padzero}[1]{\ifnum#1<10 0\fi\number#1}
+
+\tcbset{
+  tag_style/.style={
+    on line,
+    boxsep=1pt,
+    left=3pt, right=3pt, top=1pt, bottom=1pt,
+    colback=brand,
+    colframe=brand,
+    fontupper=\bfseries\scriptsize\color{white},
+    arc=2pt, boxrule=0pt,
+    valign=center,
+    before upper=\strut
+  }
+}
+
+\newcommand{\MakeShortHeader}[3]{%
+    \noindent
+    \begin{tikzpicture}
+        \node[
+            fill=keybg!60,
+            rounded corners=6pt,
+            inner sep=12pt,
+            minimum width=\linewidth,
+            text width=\dimexpr\linewidth-30pt\relax,
+            align=left
+        ] (box) {
+            {\footnotesize \color{keydark!60} \the\year·\padzero{\the\month}·\padzero{\the\day} \hfill @MIStatlE} \\
+            \vspace{0.2em}
+            {\fontsize{20pt}{24pt}\selectfont\bfseries\color{keydark} #1} \\[0.2em]
+            {\normalsize\color{ink!80} #2}
+            \vspace{0.5em}
+
+            \foreach \T in {#3} {
+                \tcbox[tag_style]{\T}\hspace{0.2em}
+            }
+        };
+        \draw[brandD, line width=3pt] (box.north west) -- (box.south west);
+    \end{tikzpicture}
+    \vspace{1.0em}
+}
+
+% ------------------------------------------------
+% 9. Header / footer
+% ------------------------------------------------
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\fancyfoot[C]{\footnotesize\color{brand!50} · \thepage \ ·}
+\pagestyle{fancy}
+
+% ------------------------------------------------
+% 10. Highlight commands
+% ------------------------------------------------
+\newcommand{\Term}[1]{\textcolor{termblue}{\textbf{#1}}}
+\newcommand{\Emph}[1]{\textcolor{accentD}{\textbf{#1}}}
+\newcommand{\hl}[1]{%
+  \tikz[baseline=(X.base)]
+    \node[
+      rectangle,
+      rounded corners=2pt,
+      fill=brand!15,
+      inner sep=1.5pt,
+      anchor=base
+    ] (X) {#1};%
+}
+
+% ------------------------------------------------
+% 11. Useful theorem environments (optional)
+% ------------------------------------------------
+\theoremstyle{plain}
+\newtheorem{theorem}{定理}[section]
+\newtheorem{lemma}[theorem]{引理}
+\newtheorem{proposition}[theorem]{命题}
+\newtheorem{corollary}[theorem]{推论}
+
+\theoremstyle{definition}
+\newtheorem{definition}{定义}[section]
+
+\theoremstyle{remark}
+\newtheorem{remark}{注}[section]
