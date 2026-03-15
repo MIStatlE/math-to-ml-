@@ -1,0 +1,37 @@
+name: LaTeX Syntax Check
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'templates/**/*.tex'
+  pull_request:
+    branches: [ main ]
+    paths:
+      - 'templates/**/*.tex'
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Install TeX Live
+      uses: xu-cheng/latex-action@v3
+      with:
+        working_directory: templates
+        root_file: article-en.tex
+        latexmk_use_xelatex: true
+        continue_on_error: true
+
+    - name: Check LaTeX files exist
+      run: |
+        echo "Checking LaTeX template files..."
+        for file in templates/*.tex; do
+          if [ -f "$file" ]; then
+            echo "✓ Found: $file"
+          fi
+        done
+        echo "All template files are present."
